@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia - Yumbrel Resort</title>
+
+    <!-- Fuentes Google (Nunito para ese look rounded y amigable) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Animaciones AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind CSS con Configuración Personalizada -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        'kinder-bg': '#FFFBF0', // Crema suave
+                        'kinder-pink': '#FFD6E0',
+                        'kinder-blue': '#C1EFFF',
+                        'kinder-green': '#D1F2D8',
+                        'kinder-yellow': '#FFEBB0',
+                        'kinder-text': '#4A4A4A',
+                        'accent': '#FF8FA3'
+                    },
+                    borderRadius: {
+                        'blob': '40% 60% 70% 30% / 40% 50% 60% 50%',
+                        'xl': '1.5rem',
+                        '2xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilos base y utilidades extra */
+        body {
+            background-color: #FFFBF0;
+            color: #4A4A4A;
+        }
+
+        /* Animación flotante */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Blob Backgrounds */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Glassmorphism para el Nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Personalización del scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFD6E0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF8FA3;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-kinder-pink selection:text-kinder-text">
+
+    <!-- Fondo Decorativo -->
+    <div class="blob bg-kinder-blue w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply animate-float"></div>
+    <div class="blob bg-kinder-pink w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animate-float" style="animation-delay: 2s"></div>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="bg-accent text-white p-2 rounded-full shadow-lg">
+                        <i data-lucide="blocks" class="w-6 h-6"></i>
+                    </div>
+                    <span class="font-extrabold text-2xl tracking-tight text-kinder-text">Yumbrel<span class="text-accent"> Resort</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-kinder-text hover:text-accent font-bold transition-colors">Inicio</a>
+                    <a href="index.html#piscina" class="text-kinder-text hover:text-accent font-bold transition-colors">Piscina</a>
+                    <a href="index.html#galeria" class="text-kinder-text hover:text-accent font-bold transition-colors">Galería</a>
+                    <a href="index.html#contacto" class="text-kinder-text hover:text-accent font-bold transition-colors">Contacto</a>
+                    <a href="index.html#contacto" class="reserva-btn bg-accent text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all transform">Contacto</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-kinder-text hover:text-accent focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Panel -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md absolute w-full border-b border-kinder-pink/20 shadow-xl">
+                <div class="px-4 pt-2 pb-6 space-y-2 text-center">
+                    <a href="index.html" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Inicio</a>
+                    <a href="index.html#piscina" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Piscina</a>
+                    <a href="index.html#galeria" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Galería</a>
+                    <a href="index.html#contacto" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Contacto</a>
+                    <a href="index.html#contacto" class="reserva-btn block px-3 py-3 text-lg font-bold text-accent bg-kinder-pink/30 rounded-xl mt-4">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center" data-aos="fade-up">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-kinder-yellow text-orange-500 font-bold text-sm mb-6 shadow-sm">
+                    ✨ Nuestra Historia
+                </span>
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6 text-kinder-text">
+                    Más de <span class="text-accent underline decoration-wavy decoration-kinder-blue">15 años</span> de amor por los niños
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+                    Desde nuestros humildes comienzos hasta convertirnos en el referente educativo de la zona, cada paso ha sido guiado por la pasión por el desarrollo infantil.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Línea del Tiempo -->
+    <section class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-kinder-text mb-4">Nuestro Camino</h2>
+                <div class="w-24 h-2 bg-accent mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                    Un viaje de crecimiento, aprendizaje y dedicación a la educación infantil.
+                </p>
+            </div>
+
+            <div class="relative">
+                <!-- Línea vertical -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-accent h-full hidden md:block"></div>
+
+                <div class="space-y-12">
+                    <!-- 2010 -->
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-right">
+                        <div class="md:w-1/2 md:pr-8 mb-4 md:mb-0">
+                            <div class="bg-kinder-bg p-6 rounded-2xl shadow-lg">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-kinder-blue rounded-full flex items-center justify-center">
+                                        <i data-lucide="calendar" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-kinder-text">2010 - Los Comienzos</h3>
+                                        <p class="text-accent font-semibold">Fundación del Yumbrel Kinder</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Todo comenzó con un sueño: crear un espacio donde los niños pudieran aprender jugando.
+                                    María Pérez, nuestra directora fundadora, abrió las puertas de nuestro primer jardín con solo 15 niños.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-8">
+                            <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=800&auto=format&fit=crop" alt="Comienzos" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                    </div>
+
+                    <!-- 2015 -->
+                    <div class="flex flex-col md:flex-row-reverse items-center" data-aos="fade-left">
+                        <div class="md:w-1/2 md:pl-8 mb-4 md:mb-0">
+                            <div class="bg-kinder-bg p-6 rounded-2xl shadow-lg">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center">
+                                        <i data-lucide="users" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-kinder-text">2015 - Crecimiento</h3>
+                                        <p class="text-accent font-semibold">Expansión y certificaciones</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Obtuvimos las primeras certificaciones Montessori y ampliamos nuestras instalaciones.
+                                    El número de familias creció exponencialmente, llegando a más de 100 niños.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pr-8">
+                            <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?q=80&w=800&auto=format&fit=crop" alt="Crecimiento" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                    </div>
+
+                    <!-- 2020 -->
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-right">
+                        <div class="md:w-1/2 md:pr-8 mb-4 md:mb-0">
+                            <div class="bg-kinder-bg p-6 rounded-2xl shadow-lg">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-kinder-yellow rounded-full flex items-center justify-center">
+                                        <i data-lucide="home" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-kinder-text">2020 - Transformación</h3>
+                                        <p class="text-accent font-semibold">Nuevas instalaciones</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Inauguramos nuestras nuevas instalaciones con piscina climatizada, gimnasio y espacios amplios.
+                                    Convertimos Yumbrel en un resort educativo completo para familias.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-8">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop" alt="Transformación" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                    </div>
+
+                    <!-- 2026 -->
+                    <div class="flex flex-col md:flex-row-reverse items-center" data-aos="fade-left">
+                        <div class="md:w-1/2 md:pl-8 mb-4 md:mb-0">
+                            <div class="bg-kinder-bg p-6 rounded-2xl shadow-lg border-2 border-accent">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center">
+                                        <i data-lucide="star" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-kinder-text">2026 - El Futuro</h3>
+                                        <p class="text-accent font-semibold">Innovación continua</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Seguimos innovando con nuevas metodologías, tecnología educativa y compromiso con la excelencia.
+                                    Nuestro sueño continúa creciendo junto con cada niño que pasa por nuestras puertas.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pr-8">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Futuro" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Valores -->
+    <section class="py-20 bg-kinder-yellow/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-kinder-text mb-4">Nuestros Valores</h2>
+                <div class="w-24 h-2 bg-accent mx-auto rounded-full mb-6"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-kinder-blue rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="heart" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-kinder-text">Amor y Respeto</h3>
+                    <p class="text-gray-600">Cada niño es único y especial. Tratamos a todos con el amor y respeto que merecen.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-kinder-green rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="lightbulb" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-kinder-text">Innovación</h3>
+                    <p class="text-gray-600">Constantemente buscamos nuevas formas de hacer que el aprendizaje sea divertido y efectivo.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-kinder-pink rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="users" class="w-8 h-8 text-pink-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-kinder-text">Comunidad</h3>
+                    <p class="text-gray-600">Creemos en el poder de la comunidad. Padres, maestros y niños crecemos juntos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Histórica -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-kinder-text mb-4">Momentos Inolvidables</h2>
+                <div class="w-24 h-2 bg-accent mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                    Una colección de momentos que han marcado nuestra historia.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+                <div class="col-span-2 row-span-2 rounded-3xl overflow-hidden shadow-lg" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="rounded-3xl overflow-hidden shadow-lg bg-kinder-yellow" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="rounded-3xl overflow-hidden shadow-lg bg-kinder-blue" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="col-span-2 rounded-3xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="bg-accent text-white p-2 rounded-full shadow-lg">
+                            <i data-lucide="blocks" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-extrabold text-2xl tracking-tight">Yumbrel<span class="text-accent"> Resort</span></span>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Más de 15 años dedicados a la educación y desarrollo infantil con amor y pasión.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Enlaces</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">Inicio</a></li>
+                        <li><a href="index.html#piscina" class="text-gray-300 hover:text-accent transition-colors">Piscina</a></li>
+                        <li><a href="index.html#galeria" class="text-gray-300 hover:text-accent transition-colors">Galería</a></li>
+                        <li><a href="index.html#contacto" class="text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
+                    <p class="text-gray-300 mb-2">Av. Los Girasoles 123, Lima</p>
+                    <p class="text-gray-300 mb-2">+51 987 654 321</p>
+                    <p class="text-gray-300">info@yumbrelresort.com</p>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-gray-400">© 2026 Yumbrel Resort. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // Inicializar Animaciones AOS
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Lógica del Menú Móvil
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        if (btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Efecto Navbar Scroll
+        const nav = document.getElementById('navbar');
+        if (nav) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                } else {
+                    nav.classList.remove('shadow-md');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
