@@ -136,6 +136,7 @@
 
 <body class="overflow-x-hidden selection:bg-[rgba(238,107,89,0.22)] selection:text-kinder-text font-body">
 
+
     <!-- Fondo Decorativo -->
     <div class="blob bg-soft-e3 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply animate-float"></div>
     <div class="blob bg-soft-e1 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animate-float" style="animation-delay: 2s"></div>
@@ -145,14 +146,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
 
-                <!-- Logo (click a home) -->
-                <a href="index.html" class="flex items-center">
-    <img 
-        src="assets/logo.png"
-        alt="Yumbrel Resort"
-        class="h-10 w-auto object-contain cursor-pointer"
-    >
-</a>
+                <!-- contenedor del logo  -->
+            <a href="index.html" class="inline-block mr-4">
+            <div class="w-32 h-16 flex items-center overflow-hidden">
+                <img
+                src="assets/logo.png"
+                alt="Yumbrel"
+                class="w-full h-full object-contain transform scale-130 origin-center"
+                >
+            </div>
+            </a>
 
 
                 <!-- Desktop Menu (sin contacto duplicado) -->
@@ -392,12 +395,12 @@
         <div class="blob w-64 h-64 rounded-full bottom-0 right-0 mix-blend-multiply opacity-30 blur-3xl absolute" style="background: rgba(178,189,111,0.35)"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
                 
                     <!-- Información de la Empresa -->
                         <div class="lg:col-span-2">
                         <div class="mb-6">
-                            <a href="#top" class="inline-block">
+                            <a href="index.html" class="inline-block">
                             <img
                                 src="assets/logo.png"
                                 alt="Yumbrel Resort"
@@ -406,7 +409,7 @@
                             </a>
                         </div>
 
-                        <p class="text-gray-300 mb-6 leading-relaxed">
+                        <p class="text-gray-300 mb-6 leading-relaxed max-w-md">
                             Un destino premium que combina educación infantil de calidad con instalaciones de lujo para toda la familia.
                             Comprometidos con la excelencia en cada detalle.
                         </p>
@@ -442,28 +445,17 @@
                 <div>
                     <h3 class="text-xl font-bold mb-6 font-title">Enlaces Rápidos</h3>
                     <ul class="space-y-3">
-                        <li><a href="#home" class="text-gray-300 hover:text-accent transition-colors">Inicio</a></li>
-                        <li><a href="historia.html" class="text-gray-300 hover:text-accent transition-colors">Sobre Nosotros</a></li> 
-                        <li><a href="#servicios" class="text-gray-300 hover:text-accent transition-colors">Actividades</a></li>
-                        <li><a href="#piscina" class="text-gray-300 hover:text-accent transition-colors">Piscina & Servicios</a></li>
-                        <li><a href="#galeria" class="text-gray-300 hover:text-accent transition-colors">Galería</a></li>
-                        <li><a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
+                        <li><a href="index.html#home" class="text-gray-300 hover:text-accent transition-colors">Inicio</a></li>
+                        <li><a href="historia.html" class="text-gray-300 hover:text-accent transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="index.html#servicios" class="text-gray-300 hover:text-accent transition-colors">Actividades</a></li>
+                        <li><a href="index.html#piscina" class="text-gray-300 hover:text-accent transition-colors">Piscina & Servicios</a></li>
+                        <li><a href="index.html#galeria" class="text-gray-300 hover:text-accent transition-colors">Galería</a></li>
+                        <li><a href="index.html#reservar" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
                     </ul>
+
                 </div>
 
-                <!-- Servicios -->
-                <div>
-                    <h3 class="text-xl font-bold mb-6 font-title">Nuestros Servicios</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Pre Kinder</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Piscina Climatizada</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Constantes Capacitaciones</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Seguridad Completa</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Desarrollo Integral</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Eventos</a></li>
-                    </ul>
-                </div>
-            </div>
+                
 
             <!-- Información de Contacto -->
            <div class="bg-gray-800 rounded-[2rem] p-8 shadow-2xl relative z-10">
@@ -472,15 +464,15 @@
                         <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
                         </div>
-                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Ubicación</a>                        
-                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Av. Los Girasoles 123, Lima, Perú</a>
+                        <a href="index.html#reservar" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Ubicación</a>                        
+                        <a href="index.html#reservar" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Av. Los Girasoles 123, Lima, Perú</a>
                     </div>
                     <div class="text-center">
                         <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="phone" class="w-6 h-6 text-white"></i>
                         </div>
-                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Teléfono</a> 
-                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">+51 987 654 321</a>
+                        <a href="index.html#reservar" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Teléfono</a> 
+                        <a href="index.html#reservar" class="reserva-btn text-gray-300 hover:text-accent transition-colors">+51 987 654 321</a>
 
                         <p class="text-gray-300 text-sm">Lun - Dom: 8:00 - 20:00</p>
                     </div>
@@ -488,9 +480,9 @@
                         <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="mail" class="w-6 h-6 text-white"></i>
                         </div>
-                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Correo</a> 
-                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">info@yumbrel.com</a>                         
-                        
+                        <a href="index.html#reservar" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Correo</a> 
+                        <a href="index.html#reservar" class="reserva-btn text-gray-300 hover:text-accent transition-colors">info@yumbrel.com</a>                         
+
                     </div>
                 </div>
             </div>
@@ -506,7 +498,7 @@
                     <div class="flex gap-6 text-sm">
                         <a href="#" class="text-gray-400 hover:text-accent transition-colors">Política de Privacidad</a>
                         <a href="#" class="text-gray-400 hover:text-accent transition-colors">Términos de Servicio</a>
-                        <a href="#" class="text-gray-400 hover:text-accent transition-colors">Política de Cookies</a>
+                        
                     </div>
                 </div>
             </div>
