@@ -1,35 +1,149 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yumbrel - Resort & Pre Kinder</title>
-    
-    <!-- Fuentes Google (Nunito para ese look rounded y amigable) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Animaciones AOS -->
+
+    <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Tailwind CSS con Configuración Personalizada -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* =========================
+           FUENTES LOCALES
+           assets/fonts/1.ttf -> títulos
+           assets/fonts/2.ttf -> contenidos
+           ========================= */
+        @font-face {
+            font-family: "YumbrelTitle";
+            src: url("assets/fonts/1.ttf") format("truetype");
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "YumbrelBody";
+            src: url("assets/fonts/2.ttf") format("truetype");
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Base */
+        body {
+            background-color: var(--k-bg);
+            color: var(--k-text);
+            font-family: "YumbrelBody", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+        .font-title { font-family: "YumbrelTitle", system-ui, sans-serif; }
+
+        /* Animación flotante */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Blob */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Glass nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        /* Scrollbar global (suave) */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--k-bg); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.14); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.30); }
+
+        /* Scrollbar del modal */
+        .modal-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent;
+            --scrollbar-opacity: 0;
+        }
+        .modal-scroll::-webkit-scrollbar { width: 8px; }
+        .modal-scroll::-webkit-scrollbar-track { background: transparent; }
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(238, 107, 89, 0.35); /* E1 coral suave */
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: var(--scrollbar-opacity);
+        }
+        .modal-scroll:hover::-webkit-scrollbar-thumb { opacity: 1; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(238, 107, 89, 0.80);
+        }
+    </style>
+
     <script>
+        /* =========================
+           NUEVA PALETA (fondo + 3 énfasis)
+           Fondo: #FFFAF4
+           E1: #EE6B59 (coral)
+           E2: #B2BD6F (oliva)
+           E3: #FEC164 (amarillo)
+           ========================= */
+        const PALETTE = {
+            bg: '#FFFAF4',
+            e1: '#EE6B59',
+            e2: '#B2BD6F',
+            e3: '#FEC164',
+
+            // Neutrales UI (para que se lea y se vea premium)
+            ink: '#1F2937',
+            muted: '#6B7280',
+        };
+
+        // Variables CSS globales
+        document.documentElement.style.setProperty('--k-bg', PALETTE.bg);
+        document.documentElement.style.setProperty('--k-e1', PALETTE.e1);
+        document.documentElement.style.setProperty('--k-e2', PALETTE.e2);
+        document.documentElement.style.setProperty('--k-e3', PALETTE.e3);
+        document.documentElement.style.setProperty('--k-text', PALETTE.ink);
+        document.documentElement.style.setProperty('--k-muted', PALETTE.muted);
+
+        // “soft tints” (mismos colores pero diluidos)
+        document.documentElement.style.setProperty('--k-e1-soft', 'rgba(238, 107, 89, 0.18)');
+        document.documentElement.style.setProperty('--k-e2-soft', 'rgba(178, 189, 111, 0.18)');
+        document.documentElement.style.setProperty('--k-e3-soft', 'rgba(254, 193, 100, 0.22)');
+
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Nunito', 'sans-serif'],
+                        title: ['YumbrelTitle', 'system-ui', 'sans-serif'],
+                        body: ['YumbrelBody', 'system-ui', 'sans-serif'],
+                        sans: ['YumbrelBody', 'system-ui', 'sans-serif'],
                     },
                     colors: {
-                        'kinder-bg': '#FFFBF0', // Crema suave
-                        'kinder-pink': '#FFD6E0',
-                        'kinder-blue': '#C1EFFF',
-                        'kinder-green': '#D1F2D8',
-                        'kinder-yellow': '#FFEBB0',
-                        'kinder-text': '#4A4A4A',
-                        'accent': '#FF8FA3'
+                        'kinder-bg': 'var(--k-bg)',
+                        'kinder-text': 'var(--k-text)',
+                        'muted': 'var(--k-muted)',
+
+                        // énfasis
+                        'accent': 'var(--k-e1)',       // coral (CTA principal)
+                        'kinder-green': 'var(--k-e2)', // oliva (apoyo / naturaleza)
+                        'kinder-yellow': 'var(--k-e3)',// amarillo (badges / highlights)
+
+                        // suaves
+                        'soft-e1': 'var(--k-e1-soft)',
+                        'soft-e2': 'var(--k-e2-soft)',
+                        'soft-e3': 'var(--k-e3-soft)',
                     },
                     borderRadius: {
                         'blob': '40% 60% 70% 30% / 40% 50% 60% 50%',
@@ -43,83 +157,27 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /* Estilos base y utilidades extra */
-        body {
-            background-color: #FFFBF0;
-            color: #4A4A4A;
-        }
-        
-        /* Animación flotante */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Blob Backgrounds */
-        .blob {
-            position: absolute;
-            filter: blur(40px);
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        /* Glassmorphism para el Nav */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Personalización del scrollbar del modal */
-        .modal-scroll {
-            scrollbar-width: thin;
-            scrollbar-color: transparent transparent;
-            --scrollbar-opacity: 0;
-        }
-        .modal-scroll::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .modal-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 143, 163, 0.3);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            opacity: var(--scrollbar-opacity);
-        }
-        .modal-scroll:hover::-webkit-scrollbar-thumb {
-            opacity: 1;
-        }
-        .modal-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 143, 163, 0.8);
-        }
-    </style>
 </head>
-<body class="overflow-x-hidden selection:bg-kinder-pink selection:text-kinder-text">
+
+<body class="overflow-x-hidden selection:bg-[rgba(238,107,89,0.22)] selection:text-kinder-text font-body">
 
     <!-- Fondo Decorativo -->
-    <div class="blob bg-kinder-blue w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply animate-float"></div>
-    <div class="blob bg-kinder-pink w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animate-float" style="animation-delay: 2s"></div>
+    <div class="blob bg-soft-e3 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply animate-float"></div>
+    <div class="blob bg-soft-e1 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animate-float" style="animation-delay: 2s"></div>
 
     <!-- Navegación -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                    <div class="bg-accent text-white p-2 rounded-full shadow-lg">
-                        <i data-lucide="blocks" class="w-6 h-6"></i>
-                    </div>
-                    <span class="font-extrabold text-2xl tracking-tight text-kinder-text">Yumbrel<span class="text-accent"> Resort</span></span>
-                </div>
+                    <a href="index.html" class="flex items-center">
+    <img 
+        src="assets/logo.png"
+        alt="Yumbrel Resort"
+        class="h-10 w-auto object-contain cursor-pointer"
+    >
+</a>
+
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center">
@@ -127,7 +185,8 @@
                     <a href="#piscina" class="text-kinder-text hover:text-accent font-bold transition-colors">Piscina</a>
                     <a href="#galeria" class="text-kinder-text hover:text-accent font-bold transition-colors">Galería</a>
                     <a href="historia.html" class="text-kinder-text hover:text-accent font-bold transition-colors">Nosotros</a>
-                    <a href="#" class="reserva-btn bg-accent text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all transform">Reservar</a>
+                    <a href="#" id="reservar" class="reserva-btn bg-accent text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all transform">Reservar</a>
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -139,16 +198,17 @@
             </div>
         </div>
 
-            <!-- Mobile Menu Panel -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md absolute w-full border-b border-kinder-pink/20 shadow-xl">
-                <div class="px-4 pt-2 pb-6 space-y-2 text-center">
-                    <a href="#home" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Inicio</a>
-                    <a href="#piscina" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Piscina</a>
-                    <a href="#galeria" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Galería</a>
-                    <a href="historia.html" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Nosotros</a>
-                    <a href="#" class="reserva-btn block px-3 py-3 text-lg font-bold text-accent bg-kinder-pink/30 rounded-xl mt-4">Reservar</a>
-                </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md absolute w-full border-b border-[rgba(0,0,0,0.06)] shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2 text-center">
+                <a href="#home" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Inicio</a>
+                <a href="#piscina" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Piscina</a>
+                <a href="#galeria" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Galería</a>
+                <a href="historia.html" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Nosotros</a>
+                <a href="#" id="reservar" class="reserva-btn bg-accent text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all transform">Reservar</a>
+
             </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -156,34 +216,37 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div data-aos="fade-right" data-aos-duration="1000">
-                    <span class="inline-block px-4 py-1.5 rounded-full bg-kinder-yellow text-orange-500 font-bold text-sm mb-6 shadow-sm">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-soft-e3 text-kinder-text font-bold text-sm mb-6 shadow-sm">
                         ✨ Matrículas Abiertas 2026
                     </span>
-                    <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6 text-kinder-text">
-                        Aprender jugando es <span class="text-accent underline decoration-wavy decoration-kinder-blue">mágico</span>
+
+                    <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6 text-kinder-text font-title">
+                        Aprender jugando es <span class="text-accent underline decoration-wavy decoration-soft-e2">mágico</span>
                     </h1>
-                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+
+                    <p class="text-xl text-muted mb-8 leading-relaxed">
                         Un espacio seguro, lleno de amor y creatividad donde tu pequeño descubrirá el mundo a su propio ritmo. Diseño Montessori y calidez de hogar.
                     </p>
+
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#contacto" class="px-8 py-4 bg-accent text-white rounded-full font-bold text-lg shadow-lg hover:shadow-accent/40 hover:-translate-y-1 transition-all text-center">
-                            Agendar Visita
-                        </a>
-                        <a href="#metodologia" class="px-8 py-4 bg-white text-kinder-text border-2 border-kinder-pink rounded-full font-bold text-lg hover:bg-kinder-pink hover:text-white transition-all text-center flex items-center justify-center gap-2">
+                        <a href="#" class="reserva-btn px-8 py-4 bg-accent text-white rounded-full font-bold text-lg shadow-lg hover:shadow-accent/40 hover:-translate-y-1 transition-all text-center">
+    Agendar Visita
+</a>
+
+                        <a href="#metodologia" class="px-8 py-4 bg-white text-kinder-text border-2 border-soft-e1 rounded-full font-bold text-lg hover:bg-soft-e1 transition-all text-center flex items-center justify-center gap-2">
                             <i data-lucide="play-circle" class="w-5 h-5"></i> Ver Video
                         </a>
                     </div>
                 </div>
+
                 <div class="relative" data-aos="zoom-in" data-aos-duration="1200">
-                    <!-- Placeholder Image styled as a blob -->
                     <div class="relative z-10 animate-float">
-                        <img src="https://images.unsplash.com/photo-1587654780291-39c940483713?q=80&w=1000&auto=format&fit=crop" 
-                             alt="Niños felices" 
+                        <img src="https://images.unsplash.com/photo-1587654780291-39c940483713?q=80&w=1000&auto=format&fit=crop"
+                             alt="Niños felices"
                              class="rounded-[2.5rem] shadow-2xl w-full h-auto object-cover border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500">
                     </div>
-                    <!-- Decorative elements behind image -->
-                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-kinder-yellow rounded-full opacity-80 mix-blend-multiply animate-bounce" style="animation-duration: 3s"></div>
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-kinder-blue rounded-full opacity-80 mix-blend-multiply animate-pulse"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-soft-e3 rounded-full opacity-80 mix-blend-multiply animate-bounce" style="animation-duration: 3s"></div>
+                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-soft-e2 rounded-full opacity-80 mix-blend-multiply animate-pulse"></div>
                 </div>
             </div>
         </div>
@@ -193,43 +256,43 @@
     <section id="metodologia" class="py-20 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-extrabold text-kinder-text mb-4">¿Por qué nosotros?</h2>
+                <h2 class="text-4xl font-extrabold text-kinder-text mb-4 font-title">¿Por qué nosotros?</h2>
                 <div class="w-24 h-2 bg-accent mx-auto rounded-full mb-6"></div>
-                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                <p class="text-muted max-w-2xl mx-auto text-lg">
                     Más que un jardín, somos una segunda casa. Nos enfocamos en el desarrollo emocional y cognitivo a través del juego libre.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Card 1 -->
-                <div class="bg-kinder-bg p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-kinder-green" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-kinder-green text-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div class="bg-soft-e3 p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-[rgba(254,193,100,0.35)]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-white/70 text-kinder-green rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="sprout" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Crianza Respetuosa</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Crianza Respetuosa</h3>
+                    <p class="text-muted">
                         Validamos cada emoción. Acompañamos los procesos de cada niño sin presiones, con amor y paciencia.
                     </p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-kinder-bg p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-kinder-blue" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-kinder-blue text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div class="bg-soft-e2 p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-[rgba(178,189,111,0.35)]" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-white/70 text-accent rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="shapes" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Espacios Seguros</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Espacios Seguros</h3>
+                    <p class="text-muted">
                         Aulas diseñadas para la exploración segura. Muebles a su altura, materiales naturales y mucha luz.
                     </p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-kinder-bg p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-kinder-yellow" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-16 h-16 bg-kinder-yellow text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div class="bg-soft-e1 p-8 rounded-[2rem] hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-[rgba(238,107,89,0.35)]" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-white/70 text-kinder-yellow rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="heart-handshake" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Comunidad</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Comunidad</h3>
+                    <p class="text-muted">
                         Involucramos a las familias en cada paso. Talleres para padres y actividades de integración mensual.
                     </p>
                 </div>
@@ -239,67 +302,62 @@
 
     <!-- Servicios y Actividades -->
     <section id="servicios" class="py-20 relative overflow-hidden">
-        <!-- Blobs decorativos de fondo -->
-        <div class="absolute top-1/2 left-0 w-full h-full bg-gradient-to-b from-transparent to-kinder-pink/10 -z-10"></div>
+        <div class="absolute top-1/2 left-0 w-full h-full bg-gradient-to-b from-transparent to-soft-e1 -z-10"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-end justify-between mb-12 gap-4">
                 <div data-aos="fade-right">
-                    <h2 class="text-4xl font-extrabold text-kinder-text">Un día en el Kinder</h2>
-                    <p class="text-gray-500 mt-2 text-lg">Rutinas llenas de diversión y aprendizaje</p>
+                    <h2 class="text-4xl font-extrabold text-kinder-text font-title">Un día en el Kinder</h2>
+                    <p class="text-muted mt-2 text-lg">Rutinas llenas de diversión y aprendizaje</p>
                 </div>
                 <div data-aos="fade-left">
-                     <button class="text-accent font-bold hover:bg-kinder-pink/20 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <button class="text-accent font-bold hover:bg-soft-e1 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                         Ver horario completo <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                     </button>
+                    </button>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Servicio 1 -->
                 <div class="group relative overflow-hidden rounded-[2rem] h-80 shadow-md cursor-pointer" data-aos="zoom-in">
                     <img src="https://images.unsplash.com/photo-1596464716127-f9a82741cac8?q=80&w=800&auto=format&fit=crop" alt="Arte" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
                         <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
                             <i data-lucide="palette" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-white text-xl font-bold">Arte y Sensorial</h3>
+                        <h3 class="text-white text-xl font-bold font-title">Arte y Sensorial</h3>
                         <p class="text-white/80 text-sm mt-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">Pintura, arcilla y texturas.</p>
                     </div>
                 </div>
 
-                <!-- Servicio 2 -->
                 <div class="group relative overflow-hidden rounded-[2rem] h-80 shadow-md cursor-pointer mt-0 lg:mt-12" data-aos="zoom-in" data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1505377059067-e285a7bac49b?q=80&w=800&auto=format&fit=crop" alt="Psicomotricidad" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
-                         <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
+                        <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
                             <i data-lucide="activity" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-white text-xl font-bold">Psicomotricidad</h3>
+                        <h3 class="text-white text-xl font-bold font-title">Psicomotricidad</h3>
                         <p class="text-white/80 text-sm mt-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">Movimiento libre y coordinación.</p>
                     </div>
                 </div>
 
-                <!-- Servicio 3 -->
                 <div class="group relative overflow-hidden rounded-[2rem] h-80 shadow-md cursor-pointer" data-aos="zoom-in" data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1555843477-9cb83e57143a?q=80&w=800&auto=format&fit=crop" alt="Cuentacuentos" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
-                         <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
+                        <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
                             <i data-lucide="book-open" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-white text-xl font-bold">Lectura Mágica</h3>
+                        <h3 class="text-white text-xl font-bold font-title">Lectura Mágica</h3>
                         <p class="text-white/80 text-sm mt-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">Fomentando el amor por los libros.</p>
                     </div>
                 </div>
 
-                 <!-- Servicio 4 -->
                 <div class="group relative overflow-hidden rounded-[2rem] h-80 shadow-md cursor-pointer mt-0 lg:mt-12" data-aos="zoom-in" data-aos-delay="300">
                     <img src="https://images.unsplash.com/photo-1560707854-fb9a102ca03b?q=80&w=800&auto=format&fit=crop" alt="Jardinería" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
-                         <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
+                        <div class="bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center mb-2 text-white">
                             <i data-lucide="sun" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-white text-xl font-bold">Biohuerto</h3>
+                        <h3 class="text-white text-xl font-bold font-title">Biohuerto</h3>
                         <p class="text-white/80 text-sm mt-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">Conexión con la naturaleza.</p>
                     </div>
                 </div>
@@ -308,78 +366,75 @@
     </section>
 
     <!-- Piscina y Servicios Complementarios -->
-    <section id="piscina" class="py-20 bg-gradient-to-b from-kinder-blue/20 to-white relative">
+    <section id="piscina" class="py-20 bg-gradient-to-b from-soft-e2 to-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-extrabold text-kinder-text mb-4">Piscina y Servicios Complementarios</h2>
+                <h2 class="text-4xl font-extrabold text-kinder-text mb-4 font-title">Piscina y Servicios Complementarios</h2>
                 <div class="w-24 h-2 bg-accent mx-auto rounded-full mb-6"></div>
-                <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+                <p class="text-muted max-w-2xl mx-auto text-lg">
                     Disfruta de nuestras instalaciones acuáticas y una amplia gama de servicios para tu comodidad y entretenimiento.
                 </p>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
                 <div data-aos="fade-right">
-                    <h3 class="text-3xl font-bold text-kinder-text mb-6">Piscina Climatizada</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
+                    <h3 class="text-3xl font-bold text-kinder-text mb-6 font-title">Piscina Climatizada</h3>
+                    <p class="text-muted mb-6 leading-relaxed">
                         Nuestra piscina climatizada ofrece un ambiente perfecto durante todo el año. Con agua templada y tratamientos especializados, es ideal para relajarse y disfrutar de momentos inolvidables con la familia.
                     </p>
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check-circle" class="w-5 h-5 text-accent"></i>
-                            <span class="text-gray-700">Agua climatizada a 28°C</span>
+                            <span class="text-kinder-text">Agua climatizada a 28°C</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check-circle" class="w-5 h-5 text-accent"></i>
-                            <span class="text-gray-700">Sistema de filtración avanzado</span>
+                            <span class="text-kinder-text">Sistema de filtración avanzado</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check-circle" class="w-5 h-5 text-accent"></i>
-                            <span class="text-gray-700">Área de juegos acuáticos para niños</span>
+                            <span class="text-kinder-text">Área de juegos acuáticos para niños</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check-circle" class="w-5 h-5 text-accent"></i>
-                            <span class="text-gray-700">Horarios flexibles de uso</span>
+                            <span class="text-kinder-text">Horarios flexibles de uso</span>
                         </li>
                     </ul>
                 </div>
                 <div class="relative" data-aos="fade-left">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop" 
-                         alt="Piscina climatizada" 
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop"
+                         alt="Piscina climatizada"
                          class="rounded-[2.5rem] shadow-2xl w-full h-auto object-cover border-8 border-white">
                 </div>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Servicio 1 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-kinder-green text-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <div class="w-16 h-16 bg-soft-e2 text-kinder-green rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="book-open" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Constantes Capacitaciones</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Constantes Capacitaciones</h3>
+                    <p class="text-muted">
                         Nuestro equipo recibe formación continua en pedagogía Montessori, primeros auxilios y desarrollo infantil, garantizando la mejor atención para tus hijos.
                     </p>
                 </div>
 
-                <!-- Servicio 2 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-kinder-blue text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <div class="w-16 h-16 bg-soft-e1 text-accent rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="shield" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Seguridad Completa</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Seguridad Completa</h3>
+                    <p class="text-muted">
                         Contamos con sistemas de vigilancia 24/7, protocolos de emergencia certificados y un ambiente seguro diseñado para la tranquilidad de padres e hijos.
                     </p>
                 </div>
 
-                <!-- Servicio 3 -->
                 <div class="bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-16 h-16 bg-kinder-yellow text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <div class="w-16 h-16 bg-soft-e3 text-kinder-yellow rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="target" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-kinder-text">Desarrollo Integral</h3>
-                    <p class="text-gray-500">
+                    <h3 class="text-2xl font-bold mb-3 text-kinder-text font-title">Desarrollo Integral</h3>
+                    <p class="text-muted">
                         Fomentamos el crecimiento cognitivo, emocional, físico y social de cada niño a través de actividades personalizadas y seguimiento individualizado.
                     </p>
                 </div>
@@ -387,72 +442,68 @@
         </div>
     </section>
 
-    <!-- Galeria (Estilo Masonry Grid simple) -->
+    <!-- Galeria -->
     <section id="galeria" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                 <span class="text-accent font-bold tracking-wider uppercase text-sm">Momentos Inolvidables</span>
-                 <h2 class="text-4xl font-extrabold text-kinder-text mt-2">Nuestra Galería</h2>
+                <span class="text-accent font-bold tracking-wider uppercase text-sm">Momentos Inolvidables</span>
+                <h2 class="text-4xl font-extrabold text-kinder-text mt-2 font-title">Nuestra Galería</h2>
             </div>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
-                <!-- Item 1 (Large) -->
                 <div class="col-span-2 row-span-2 rounded-3xl overflow-hidden shadow-lg" data-aos="fade-up">
-                    <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="">
                 </div>
-                <!-- Item 2 -->
-                <div class="rounded-3xl overflow-hidden shadow-lg bg-kinder-yellow" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                <div class="rounded-3xl overflow-hidden shadow-lg bg-soft-e3" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="">
                 </div>
-                <!-- Item 3 -->
-                <div class="rounded-3xl overflow-hidden shadow-lg bg-kinder-blue" data-aos="fade-up" data-aos-delay="200">
-                     <img src="https://images.unsplash.com/photo-1503919545889-aef6d293c9cb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                <div class="rounded-3xl overflow-hidden shadow-lg bg-soft-e2" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1503919545889-aef6d293c9cb?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="">
                 </div>
-                <!-- Item 4 -->
                 <div class="col-span-2 rounded-3xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonios / Frase -->
-    <section class="py-24 bg-kinder-yellow/30">
+    <section class="py-24 bg-soft-e3">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="mb-6 flex justify-center text-accent">
                 <i data-lucide="quote" class="w-12 h-12 fill-current opacity-50"></i>
             </div>
-            <h2 class="text-3xl md:text-5xl font-bold text-kinder-text leading-tight mb-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-kinder-text leading-tight mb-8 font-title">
                 "La educación no es la preparación para la vida; la educación es la vida en sí misma."
             </h2>
             <div class="flex items-center justify-center gap-4">
-                 <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
-                     <img src="https://ui-avatars.com/api/?name=Maria+Perez&background=FF8FA3&color=fff" alt="Directora">
-                 </div>
-                 <div class="text-left">
-                     <p class="font-bold text-kinder-text">María Pérez</p>
-                     <p class="text-sm text-gray-500">Directora Académica</p>
-                 </div>
+                <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name=Maria+Perez&background=EE6B59&color=fff" alt="Directora">
+                </div>
+                <div class="text-left">
+                    <p class="font-bold text-kinder-text">María Pérez</p>
+                    <p class="text-sm text-muted">Directora Académica</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contacto / Footer Experto -->
     <section id="contacto" class="relative pt-20 pb-10 bg-gray-900 text-white overflow-hidden">
-        <div class="blob bg-kinder-green w-64 h-64 rounded-full bottom-0 right-0 mix-blend-multiply opacity-30 blur-3xl absolute"></div>
-        
+        <div class="blob w-64 h-64 rounded-full bottom-0 right-0 mix-blend-multiply opacity-30 blur-3xl absolute" style="background: rgba(178,189,111,0.35)"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-4 gap-8 mb-12">
                 <!-- Información de la Empresa -->
                 <div class="lg:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="bg-accent text-white p-2 rounded-full shadow-lg">
-                            <i data-lucide="blocks" class="w-6 h-6"></i>
+                            <img src="assets/logo.png" alt="Yumbrel Resort" class="w-6 h-6 object-contain">
                         </div>
-                        <span class="font-extrabold text-2xl tracking-tight">Yumbrel<span class="text-accent"> Resort</span></span>
+                        <span class="font-extrabold text-2xl tracking-tight font-title">Yumbrel<span class="text-accent"> Resort</span></span>
                     </div>
                     <p class="text-gray-300 mb-6 leading-relaxed">
-                        Un destino premium que combina educación infantil de calidad con instalaciones de lujo para toda la familia. 
+                        Un destino premium que combina educación infantil de calidad con instalaciones de lujo para toda la familia.
                         Comprometidos con la excelencia en cada detalle.
                     </p>
                     <div class="flex gap-4">
@@ -465,20 +516,20 @@
 
                 <!-- Enlaces Rápidos -->
                 <div>
-                    <h3 class="text-xl font-bold mb-6">Enlaces Rápidos</h3>
+                    <h3 class="text-xl font-bold mb-6 font-title">Enlaces Rápidos</h3>
                     <ul class="space-y-3">
                         <li><a href="#home" class="text-gray-300 hover:text-accent transition-colors">Inicio</a></li>
-                        <li><a href="#metodologia" class="text-gray-300 hover:text-accent transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="historia.html" class="text-gray-300 hover:text-accent transition-colors">Sobre Nosotros</a></li> 
                         <li><a href="#servicios" class="text-gray-300 hover:text-accent transition-colors">Actividades</a></li>
                         <li><a href="#piscina" class="text-gray-300 hover:text-accent transition-colors">Piscina & Servicios</a></li>
                         <li><a href="#galeria" class="text-gray-300 hover:text-accent transition-colors">Galería</a></li>
-                        <li><a href="#contacto" class="text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
+                        <li><a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
                     </ul>
                 </div>
 
                 <!-- Servicios -->
                 <div>
-                    <h3 class="text-xl font-bold mb-6">Nuestros Servicios</h3>
+                    <h3 class="text-xl font-bold mb-6 font-title">Nuestros Servicios</h3>
                     <ul class="space-y-3">
                         <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Pre Kinder</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-accent transition-colors">Piscina Climatizada</a></li>
@@ -491,30 +542,31 @@
             </div>
 
             <!-- Información de Contacto -->
-            <div class="bg-gray-800 rounded-[2rem] p-8 shadow-2xl relative z-10">
+           <div class="bg-gray-800 rounded-[2rem] p-8 shadow-2xl relative z-10">
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
                         </div>
-                        <h4 class="font-bold mb-2">Ubicación</h4>
-                        <p class="text-gray-300">Av. Los Girasoles 123, Lima, Perú</p>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Ubicación</a>                        
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Av. Los Girasoles 123, Lima, Perú</a>
                     </div>
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="phone" class="w-6 h-6 text-white"></i>
                         </div>
-                        <h4 class="font-bold mb-2">Teléfono</h4>
-                        <p class="text-gray-300">+51 987 654 321</p>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Teléfono</a> 
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">+51 987 654 321</a>
+
                         <p class="text-gray-300 text-sm">Lun - Dom: 8:00 - 20:00</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="mail" class="w-6 h-6 text-white"></i>
                         </div>
-                        <h4 class="font-bold mb-2">Email</h4>
-                        <p class="text-gray-300">info@yumbrelresort.com</p>
-                        <p class="text-gray-300">reservas@yumbrelresort.com</p>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Correo</a> 
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">info@yumbrel.com</a>                         
+                        
                     </div>
                 </div>
             </div>
@@ -540,20 +592,17 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Inicializar Iconos
         lucide.createIcons();
 
-        // Inicializar Animaciones AOS
         AOS.init({
-            once: true, // animar solo una vez al bajar
+            once: true,
             offset: 100,
             duration: 800,
             easing: 'ease-out-cubic',
         });
 
-        // Esperar a que el DOM esté cargado
         document.addEventListener('DOMContentLoaded', function() {
-            // Lógica del Menú Móvil
+            // Menú móvil
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
 
@@ -562,7 +611,6 @@
                     menu.classList.toggle('hidden');
                 });
 
-                // Cerrar menú móvil al hacer click en un enlace
                 menu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         menu.classList.add('hidden');
@@ -570,15 +618,12 @@
                 });
             }
 
-            // Efecto Navbar Scroll
+            // Navbar scroll shadow
             const nav = document.getElementById('navbar');
             if (nav) {
                 window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) {
-                        nav.classList.add('shadow-md');
-                    } else {
-                        nav.classList.remove('shadow-md');
-                    }
+                    if (window.scrollY > 50) nav.classList.add('shadow-md');
+                    else nav.classList.remove('shadow-md');
                 });
             }
 
@@ -593,16 +638,15 @@
                     button.addEventListener('click', (e) => {
                         e.preventDefault();
                         modal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+                        document.body.style.overflow = 'hidden';
                     });
                 });
 
                 closeModal.addEventListener('click', () => {
                     modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto'; // Restaurar scroll
+                    document.body.style.overflow = 'auto';
                 });
 
-                // Cerrar modal al hacer click fuera
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.add('hidden');
@@ -610,7 +654,6 @@
                     }
                 });
 
-                // Scrollbar personalizada que aparece durante scroll
                 if (modalScroll) {
                     let scrollTimeout;
                     modalScroll.addEventListener('scroll', () => {
@@ -618,10 +661,17 @@
                         clearTimeout(scrollTimeout);
                         scrollTimeout = setTimeout(() => {
                             modalScroll.style.setProperty('--scrollbar-opacity', '0');
-                        }, 1000); // Ocultar después de 1 segundo sin scroll
+                        }, 1000);
                     });
                 }
             }
+                if (window.location.hash === '#reservar') {
+                const modal = document.getElementById('reserva-modal');
+                    if (modal) {
+                    modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
         });
     </script>
 
@@ -629,12 +679,13 @@
     <div id="reserva-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-[3rem] max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl modal-scroll">
             <!-- Header del Modal -->
-            <div class="bg-gradient-to-r from-kinder-blue to-kinder-pink p-8 rounded-t-[3rem] flex justify-between items-center">
+            <div class="p-8 rounded-t-[3rem] flex justify-between items-center"
+                 style="background: linear-gradient(90deg, rgba(178,189,111,0.35), rgba(254,193,100,0.35));">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-kinder-text">Reserva tu Visita</h2>
-                    <p class="text-kinder-text/80 mt-2">Conoce nuestras instalaciones y agenda tu cita</p>
+                    <h2 class="text-3xl font-extrabold text-kinder-text font-title">Reserva tu Visita</h2>
+                    <p class="text-muted mt-2">Conoce nuestras instalaciones y agenda tu cita</p>
                 </div>
-                <button id="close-modal" class="text-kinder-text hover:text-accent transition-colors bg-white/20 rounded-full p-2">
+                <button id="close-modal" class="text-kinder-text hover:text-accent transition-colors bg-black/5 rounded-full p-2">
                     <i data-lucide="x" class="w-8 h-8"></i>
                 </button>
             </div>
@@ -643,21 +694,21 @@
             <div class="p-10">
                 <!-- Mapa Grande -->
                 <div class="mb-10">
-                    <h3 class="text-2xl font-bold text-kinder-text mb-6 text-center">Nuestra Ubicación</h3>
+                    <h3 class="text-2xl font-bold text-kinder-text mb-6 text-center font-title">Nuestra Ubicación</h3>
                     <div class="rounded-2xl overflow-hidden shadow-2xl mb-6">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.123456789012!2d-77.0282403!3d-12.0463731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c9b2c5b5b5b5%3A0x1234567890abcdef!2sAv.%20Los%20Girasoles%20123%2C%20Lima!5e0!3m2!1ses!2spe!4v1703123456789!5m2!1ses!2spe" 
-                            width="100%" 
-                            height="350" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.123456789012!2d-77.0282403!3d-12.0463731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c9b2c5b5b5b5%3A0x1234567890abcdef!2sAv.%20Los%20Girasoles%20123%2C%20Lima!5e0!3m2!1ses!2spe!4v1703123456789!5m2!1ses!2spe"
+                            width="100%"
+                            height="350"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
-                    <div class="bg-kinder-bg p-6 rounded-2xl text-center">
-                        <h4 class="font-bold text-kinder-text text-xl mb-2">Dirección</h4>
-                        <p class="text-gray-600 text-lg">Av. Los Girasoles 123, Lima, Perú</p>
+                    <div class="bg-soft-e3 p-6 rounded-2xl text-center">
+                        <h4 class="font-bold text-kinder-text text-xl mb-2 font-title">Dirección</h4>
+                        <p class="text-muted text-lg">Av. Los Girasoles 123, Lima, Perú</p>
                     </div>
                 </div>
 
@@ -665,44 +716,42 @@
                 <div class="grid md:grid-cols-2 gap-10">
                     <!-- Horarios -->
                     <div>
-                        <h3 class="text-2xl font-bold text-kinder-text mb-6 flex items-center gap-3">
+                        <h3 class="text-2xl font-bold text-kinder-text mb-6 flex items-center gap-3 font-title">
                             <i data-lucide="clock" class="w-7 h-7 text-accent"></i>
                             Horarios de Atención
                         </h3>
-                        <div class="bg-kinder-bg p-6 rounded-2xl space-y-4">
-                            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <div class="bg-kinder-bg p-6 rounded-2xl space-y-4 border border-black/5">
+                            <div class="flex justify-between items-center py-2 border-b border-black/5">
                                 <span class="font-semibold text-kinder-text">Lunes - Viernes:</span>
                                 <span class="text-accent font-bold">8:00 AM - 6:00 PM</span>
                             </div>
-                            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <div class="flex justify-between items-center py-2 border-b border-black/5">
                                 <span class="font-semibold text-kinder-text">Sábados:</span>
                                 <span class="text-accent font-bold">9:00 AM - 2:00 PM</span>
                             </div>
                             <div class="flex justify-between items-center py-2">
                                 <span class="font-semibold text-kinder-text">Domingos:</span>
-                                <span class="text-red-500 font-bold">Cerrado</span>
+                                <span class="text-red-400 font-bold">Cerrado</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Contacto Rápido -->
                     <div>
-                        <h3 class="text-2xl font-bold text-kinder-text mb-6 flex items-center gap-3">
+                        <h3 class="text-2xl font-bold text-kinder-text mb-6 flex items-center gap-3 font-title">
                             <i data-lucide="phone" class="w-7 h-7 text-accent"></i>
                             Contacto Rápido
                         </h3>
                         <div class="space-y-4">
-                            <!-- Botón WhatsApp -->
-                            <a href="https://wa.me/51987654321?text=Hola,%20me%20gustaría%20agendar%20una%20visita%20al%20Yumbrel%20Resort" 
-                               target="_blank" 
-                               class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-4 transition-all transform hover:scale-105 shadow-lg">
+                            <a href="https://wa.me/51987654321?text=Hola,%20me%20gustaría%20agendar%20una%20visita%20al%20Yumbrel%20Resort"
+                               target="_blank"
+                               class="w-full bg-[#25D366] hover:bg-[#1fb85a] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-4 transition-all transform hover:scale-105 shadow-lg">
                                 <i data-lucide="message-circle" class="w-6 h-6"></i>
                                 <span class="text-lg">WhatsApp (+51 987 654 321)</span>
                             </a>
 
-                            <!-- Botón Teléfono -->
-                            <a href="tel:+51987654321" 
-                               class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-4 transition-all transform hover:scale-105 shadow-lg">
+                            <a href="tel:+51987654321"
+                               class="w-full bg-accent hover:bg-[rgba(238,107,89,0.9)] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-4 transition-all transform hover:scale-105 shadow-lg">
                                 <i data-lucide="phone" class="w-6 h-6"></i>
                                 <span class="text-lg">Llamar Ahora</span>
                             </a>
@@ -712,27 +761,27 @@
 
                 <!-- Formulario de Correo -->
                 <div class="mt-12">
-                    <h3 class="text-2xl font-bold text-kinder-text mb-8 text-center flex items-center justify-center gap-3">
+                    <h3 class="text-2xl font-bold text-kinder-text mb-8 text-center flex items-center justify-center gap-3 font-title">
                         <i data-lucide="mail" class="w-7 h-7 text-accent"></i>
                         O envíanos un mensaje
                     </h3>
-                    <form action="mailto:info@yumbrelresort.com" method="post" enctype="text/plain" class="bg-kinder-bg p-8 rounded-3xl">
+                    <form action="mailto:info@yumbrelresort.com" method="post" enctype="text/plain" class="bg-kinder-bg p-8 rounded-3xl border border-black/5">
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Nombre Completo *</label>
-                                <input type="text" name="nombre" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-accent focus:border-transparent transition-all outline-none shadow-sm">
+                                <label class="block text-sm font-bold text-kinder-text mb-2">Nombre Completo *</label>
+                                <input type="text" name="nombre" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-[rgba(238,107,89,0.45)] focus:border-transparent transition-all outline-none shadow-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Email *</label>
-                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-accent focus:border-transparent transition-all outline-none shadow-sm">
+                                <label class="block text-sm font-bold text-kinder-text mb-2">Email *</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-[rgba(238,107,89,0.45)] focus:border-transparent transition-all outline-none shadow-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono *</label>
-                                <input type="tel" name="telefono" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-accent focus:border-transparent transition-all outline-none shadow-sm">
+                                <label class="block text-sm font-bold text-kinder-text mb-2">Teléfono *</label>
+                                <input type="tel" name="telefono" required class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-[rgba(238,107,89,0.45)] focus:border-transparent transition-all outline-none shadow-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Edad del niño (opcional)</label>
-                                <select name="edad" class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-accent focus:border-transparent transition-all outline-none shadow-sm">
+                                <label class="block text-sm font-bold text-kinder-text mb-2">Edad del niño (opcional)</label>
+                                <select name="edad" class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-[rgba(238,107,89,0.45)] focus:border-transparent transition-all outline-none shadow-sm">
                                     <option>Selecciona una edad</option>
                                     <option>2 años</option>
                                     <option>3 años</option>
@@ -743,17 +792,17 @@
                             </div>
                         </div>
                         <div class="mb-6">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Mensaje</label>
-                            <textarea name="mensaje" rows="4" placeholder="Cuéntanos sobre tus necesidades o preguntas..." class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-accent focus:border-transparent transition-all outline-none shadow-sm resize-none"></textarea>
+                            <label class="block text-sm font-bold text-kinder-text mb-2">Mensaje</label>
+                            <textarea name="mensaje" rows="4" placeholder="Cuéntanos sobre tus necesidades o preguntas..." class="w-full px-4 py-3 rounded-xl bg-white border-transparent focus:ring-2 focus:ring-[rgba(238,107,89,0.45)] focus:border-transparent transition-all outline-none shadow-sm resize-none"></textarea>
                         </div>
                         <div class="flex items-start gap-3 mb-8">
                             <input type="checkbox" id="aceptar-info" required class="mt-1 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent">
-                            <label for="aceptar-info" class="text-sm text-gray-600 leading-relaxed">
-                                Acepto recibir información y comunicaciones de Yumbrel Resort sobre sus servicios y promociones. 
+                            <label for="aceptar-info" class="text-sm text-muted leading-relaxed">
+                                Acepto recibir información y comunicaciones de Yumbrel Resort sobre sus servicios y promociones.
                                 <span class="text-xs text-gray-500 block mt-1">Puedes darte de baja en cualquier momento.</span>
                             </label>
                         </div>
-                        <button type="submit" class="w-full py-4 bg-accent text-white font-bold rounded-2xl hover:shadow-xl hover:bg-opacity-90 transition-all transform active:scale-95 text-lg shadow-lg">
+                        <button type="submit" class="w-full py-4 bg-accent text-white font-bold rounded-2xl hover:shadow-xl hover:bg-[rgba(238,107,89,0.92)] transition-all transform active:scale-95 text-lg shadow-lg">
                             <i data-lucide="send" class="w-5 h-5 inline mr-2"></i>
                             Enviar Mensaje
                         </button>
