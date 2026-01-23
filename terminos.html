@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Términos de Servicio - Yumbrel Pre Kinder</title>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* =========================
+           FUENTES LOCALES
+           ========================= */
+        @font-face {
+            font-family: "YumbrelTitle";
+            src: url("assets/fonts/1.ttf") format("truetype");
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "YumbrelBody";
+            src: url("assets/fonts/2.ttf") format("truetype");
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Base */
+        body {
+            background-color: var(--k-bg);
+            color: var(--k-text);
+            font-family: "YumbrelBody", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+        .font-title { font-family: "YumbrelTitle", system-ui, sans-serif; }
+
+        /* Animación flotante */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Blob */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Glass nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        /* Scrollbar global (suave) */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--k-bg); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.14); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.30); }
+    </style>
+
+    <script>
+        /* =========================
+           PALETA DE COLORES
+           ========================= */
+        const PALETTE = {
+            bg: '#FFFAF4',
+            e1: '#EE6B59',
+            e2: '#B2BD6F',
+            e3: '#FEC164',
+            ink: '#1F2937',
+            muted: '#6B7280',
+        };
+
+        // Variables CSS globales
+        document.documentElement.style.setProperty('--k-bg', PALETTE.bg);
+        document.documentElement.style.setProperty('--k-e1', PALETTE.e1);
+        document.documentElement.style.setProperty('--k-e2', PALETTE.e2);
+        document.documentElement.style.setProperty('--k-e3', PALETTE.e3);
+        document.documentElement.style.setProperty('--k-text', PALETTE.ink);
+        document.documentElement.style.setProperty('--k-muted', PALETTE.muted);
+
+        document.documentElement.style.setProperty('--k-e1-soft', 'rgba(238, 107, 89, 0.18)');
+        document.documentElement.style.setProperty('--k-e2-soft', 'rgba(178, 189, 111, 0.18)');
+        document.documentElement.style.setProperty('--k-e3-soft', 'rgba(254, 193, 100, 0.22)');
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        title: ['YumbrelTitle', 'system-ui', 'sans-serif'],
+                        body: ['YumbrelBody', 'system-ui', 'sans-serif'],
+                        sans: ['YumbrelBody', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'kinder-bg': 'var(--k-bg)',
+                        'kinder-text': 'var(--k-text)',
+                        'muted': 'var(--k-muted)',
+                        'accent': 'var(--k-e1)',
+                        'kinder-green': 'var(--k-e2)',
+                        'kinder-yellow': 'var(--k-e3)',
+                        'soft-e1': 'var(--k-e1-soft)',
+                        'soft-e2': 'var(--k-e2-soft)',
+                        'soft-e3': 'var(--k-e3-soft)',
+                    },
+                    borderRadius: {
+                        'blob': '40% 60% 70% 30% / 40% 50% 60% 50%',
+                        'xl': '1.5rem',
+                        '2xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="overflow-x-hidden selection:bg-[rgba(238,107,89,0.22)] selection:text-kinder-text font-body">
+
+    <div class="blob bg-soft-e3 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply animate-float"></div>
+    <div class="blob bg-soft-e1 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply animate-float" style="animation-delay: 2s"></div>
+
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+               <a href="index.html" class="inline-block mr-4">
+                    <div class="w-32 h-16 flex items-center overflow-hidden">
+                        <img src="assets/logo.png" alt="Yumbrel" class="w-full h-full object-contain transform scale-130 origin-center">
+                    </div>
+                </a>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html#home" class="text-kinder-text hover:text-accent font-bold transition-colors">Inicio</a>
+                    <a href="index.html#piscina" class="text-kinder-text hover:text-accent font-bold transition-colors">Piscina</a>
+                    <a href="index.html#galeria" class="text-kinder-text hover:text-accent font-bold transition-colors">Galería</a>
+                    <a href="historia.html" class="text-kinder-text hover:text-accent font-bold transition-colors">Nosotros</a>
+                    <a href="index.html#reservar" class="bg-accent text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all transform">Reservar</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-kinder-text hover:text-accent focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md absolute w-full border-b border-[rgba(0,0,0,0.06)] shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2 text-center">
+                <a href="index.html#home" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Inicio</a>
+                <a href="index.html#piscina" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Piscina</a>
+                <a href="index.html#galeria" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Galería</a>
+                <a href="historia.html" class="block px-3 py-3 text-lg font-bold text-kinder-text hover:bg-kinder-bg rounded-xl">Nosotros</a>
+                <a href="index.html#reservar" class="block px-3 py-3 text-lg font-bold text-white bg-accent rounded-xl mt-4">Reservar</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-12 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 text-center" data-aos="fade-up">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-soft-e3 text-kinder-yellow font-bold text-sm mb-6 shadow-sm text-opacity-100" style="color: #bfa315;">
+                <i data-lucide="scale" class="w-4 h-4 inline mr-1"></i> Condiciones de Uso
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-kinder-text font-title">
+                Términos de Servicio
+            </h1>
+            <p class="text-xl text-muted leading-relaxed">
+                Reglas claras para una convivencia armoniosa y una experiencia educativa excepcional.
+            </p>
+        </div>
+    </section>
+
+    <section class="pb-24 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-[rgba(0,0,0,0.03)]" data-aos="fade-up" data-aos-delay="100">
+                
+                <div class="mb-10 text-muted">
+                    <p class="mb-4">
+                        Bienvenido a <strong>Yumbrel Pre Kinder</strong> (en adelante "LA INSTITUCIÓN"). Al inscribir a su hijo/a, utilizar nuestras instalaciones o navegar por nuestro sitio web, usted (en adelante "EL USUARIO" o "EL APODERADO") acepta cumplir con los siguientes Términos y Condiciones.
+                    </p>
+                    <p class="text-sm italic">
+                        Última actualización: 22 de Enero, 2026
+                    </p>
+                </div>
+
+                <div class="mb-10 group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-accent transition-colors">
+                        <span class="w-8 h-8 bg-soft-e1 rounded-full flex items-center justify-center text-accent text-sm">1</span>
+                        Descripción del Servicio
+                    </h2>
+                    <p class="text-muted leading-relaxed">
+                        LA INSTITUCIÓN ofrece servicios educativos de nivel inicial (Pre Kinder), talleres extracurriculares, y acceso a instalaciones recreativas (piscina, áreas de juegos). Nos reservamos el derecho de modificar horarios, actividades o metodologías pedagógicas buscando siempre la mejora continua del servicio.
+                    </p>
+                </div>
+
+                <div class="mb-10 group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-kinder-green transition-colors">
+                        <span class="w-8 h-8 bg-soft-e2 rounded-full flex items-center justify-center text-kinder-green text-sm">2</span>
+                        Admisión y Matrícula
+                    </h2>
+                    <p class="text-muted mb-4">
+                        El proceso de admisión está sujeto a la disponibilidad de vacantes y al cumplimiento de los requisitos documentarios exigidos por el Ministerio de Educación del Perú.
+                    </p>
+                    <div class="bg-kinder-bg p-6 rounded-2xl border border-black/5">
+                        <ul class="space-y-3 text-muted">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-kinder-green mt-1 flex-shrink-0"></i>
+                                <span>La matrícula se considera efectiva una vez realizado el pago correspondiente y firmado el contrato de servicios educativos.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-kinder-green mt-1 flex-shrink-0"></i>
+                                <span>Los pagos de matrícula no son reembolsables, salvo en casos excepcionales evaluados por la dirección.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-10 group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-kinder-yellow transition-colors">
+                        <span class="w-8 h-8 bg-soft-e3 rounded-full flex items-center justify-center text-kinder-yellow text-sm" style="color: #bfa315;">3</span>
+                        Pagos y Pensiones
+                    </h2>
+                    <p class="text-muted leading-relaxed mb-4">
+                        Las pensiones de enseñanza deben ser abonadas según el cronograma establecido al inicio del año escolar. El incumplimiento en los pagos podría resultar en la retención de certificados o la suspensión del servicio, conforme a la normativa vigente.
+                    </p>
+                </div>
+
+                <div class="mb-10 group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-accent transition-colors">
+                        <span class="w-8 h-8 bg-soft-e1 rounded-full flex items-center justify-center text-accent text-sm">4</span>
+                        Normas de Convivencia
+                    </h2>
+                    <p class="text-muted leading-relaxed mb-4">
+                        EL APODERADO se compromete a fomentar el respeto hacia el personal docente, otros padres y alumnos. Cualquier conducta que atente contra la seguridad, integridad física o moral de los miembros de la comunidad educativa será sancionada según el Reglamento Interno.
+                    </p>
+                </div>
+
+                <div class="mb-10 group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-kinder-green transition-colors">
+                        <span class="w-8 h-8 bg-soft-e2 rounded-full flex items-center justify-center text-kinder-green text-sm">5</span>
+                        Limitación de Responsabilidad
+                    </h2>
+                    <p class="text-muted leading-relaxed mb-4">
+                        LA INSTITUCIÓN toma todas las medidas de seguridad razonables para el cuidado de los menores. Sin embargo, no se hace responsable por pérdidas de objetos personales no marcados o daños derivados de situaciones de fuerza mayor ajenas a nuestro control.
+                    </p>
+                </div>
+
+                <div class="group">
+                    <h2 class="text-2xl font-bold text-kinder-text mb-4 font-title flex items-center gap-2 group-hover:text-kinder-yellow transition-colors">
+                        <span class="w-8 h-8 bg-soft-e3 rounded-full flex items-center justify-center text-kinder-yellow text-sm" style="color: #bfa315;">6</span>
+                        Propiedad Intelectual
+                    </h2>
+                    <p class="text-muted leading-relaxed">
+                        Todo el contenido de este sitio web (imágenes, textos, logos, diseño) es propiedad exclusiva de Yumbrel Pre Kinder. Está prohibida su reproducción total o parcial sin autorización expresa.
+                    </p>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="index.html" class="inline-flex items-center gap-2 text-muted hover:text-accent transition-colors font-bold">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="relative pt-20 pb-10 bg-gray-900 text-white overflow-hidden">
+        <div class="blob w-64 h-64 rounded-full bottom-0 right-0 mix-blend-multiply opacity-30 blur-3xl absolute" style="background: rgba(178,189,111,0.35)"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                
+                <div class="lg:col-span-2">
+                    <div class="mb-6">
+                        <a href="index.html" class="inline-block">
+                            <img src="assets/logo.png" alt="Yumbrel Resort" class="w-32 h-auto object-contain">
+                        </a>
+                    </div>
+
+                    <p class="text-gray-300 mb-6 leading-relaxed max-w-md">
+                        Un destino premium que combina educación infantil de calidad con instalaciones de lujo para toda la familia.
+                        Comprometidos con la excelencia en cada detalle.
+                    </p>
+
+                    <div class="flex gap-4">
+                        <a href="#" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" target="_blank" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" target="_blank" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" target="_blank" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6 font-title">Enlaces Rápidos</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#home" class="text-gray-300 hover:text-accent transition-colors">Inicio</a></li>
+                        <li><a href="historia.html" class="text-gray-300 hover:text-accent transition-colors">Sobre Nosotros</a></li> 
+                        <li><a href="index.html#servicios" class="text-gray-300 hover:text-accent transition-colors">Actividades</a></li>
+                        <li><a href="index.html#piscina" class="text-gray-300 hover:text-accent transition-colors">Piscina & Servicios</a></li>
+                        <li><a href="index.html#galeria" class="text-gray-300 hover:text-accent transition-colors">Galería</a></li>
+                        <li><a href="index.html#reservar" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Información de Contacto -->
+           <div class="bg-gray-800 rounded-[2rem] p-8 shadow-2xl relative z-10">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Ubicación</a>                        
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">Av. Los Girasoles 123, Lima, Perú</a>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Teléfono</a> 
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">+51 987 654 321</a>
+
+                        <p class="text-gray-300 text-sm">Lun - Dom: 8:00 - 20:00</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-kinder-green rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <a href="#" class="reserva-btn block text-gray-300 font-bold mb-2 font-title hover:text-kinder-yellow transition-colors">Correo</a> 
+                        <a href="#" class="reserva-btn text-gray-300 hover:text-accent transition-colors">info@yumbrel.com</a>                         
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 w-full">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <p class="text-gray-400 text-sm">
+                            © 2026 Yumbrel Pre Kinder. Todos los derechos reservados.
+                        </p>
+                        <div class="flex gap-6 text-sm">
+                            <a href="politica_privacidad.html" class="text-gray-400 hover:text-accent transition-colors">Política de Privacidad</a>
+                            <a href="terminos.html" class="text-accent hover:text-white transition-colors font-bold">Términos de Servicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        lucide.createIcons();
+
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menú móvil
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            if (btn && menu) {
+                btn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+
+                menu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        menu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // Navbar scroll shadow
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) nav.classList.add('shadow-md');
+                    else nav.classList.remove('shadow-md');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
