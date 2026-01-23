@@ -1,20 +1,6 @@
 version: "3.8"
 
 services:
-  npm:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: npm-app-1
-    restart: always
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
-    volumes:
-      - /home/guti/docker/npm/data:/data
-      - /home/guti/docker/npm/letsencrypt:/etc/letsencrypt
-    networks:
-      - proxy
-
   web-landing:
     build: .
     container_name: yumbrel_landing
@@ -24,6 +10,6 @@ services:
 
 networks:
   proxy:
-    name: proxy
+    external: true
 
     
